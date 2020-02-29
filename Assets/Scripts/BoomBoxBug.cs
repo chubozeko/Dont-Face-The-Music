@@ -11,6 +11,7 @@ public class BoomBoxBug : MonoBehaviour
     private float width;
     private float height;
 
+    public bool enableMovement = true;
     public bool isDead = false;
     public int moveDistance;
     public float totalMovement = 100;
@@ -36,22 +37,25 @@ public class BoomBoxBug : MonoBehaviour
         // animator.SetBool("IsDead", isDead);
         if (!isDead)
         {
-            if (moveDistance <= totalMovement)
+            if(enableMovement)
             {
-                if (!isMovingRight)
+                if (moveDistance <= totalMovement)
                 {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(-1, 0) * moveSpeed;
+                    if (!isMovingRight)
+                    {
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(-1, 0) * moveSpeed;
+                    }
+                    else
+                    {
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(1, 0) * moveSpeed;
+                    }
+                    moveDistance++;
                 }
                 else
                 {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(1, 0) * moveSpeed;
+                    isMovingRight = !isMovingRight;
+                    moveDistance = 0;
                 }
-                moveDistance++;
-            }
-            else
-            {
-                isMovingRight = !isMovingRight;
-                moveDistance = 0;
             }
         }
         else

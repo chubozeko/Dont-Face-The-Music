@@ -72,10 +72,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cad27bc89f13014ca5689221d4ac754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDistance: 0
-  totalMovement: 180
-  moveSpeed: 2
+  movementSpeed: 2
+  enableVerticalMovement: 0
+  verticalMoveDistance: 0
+  totalVerticalMovement: 50
   isMovingDown: 0
+  enableHorizontalMovement: 0
+  horizontalMoveDistance: 0
+  totalHorizontalMovement: 50
+  isMovingLeft: 0
 --- !u!50 &-8065718564072586513
 Rigidbody2D:
   serializedVersion: 4

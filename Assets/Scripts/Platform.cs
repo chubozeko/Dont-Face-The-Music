@@ -4,38 +4,74 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    public int moveDistance;
-    public float totalMovement = 50;
-    public float moveSpeed = 3f;
-    public bool isMovingDown = false;
     private Rigidbody2D rb;
+    public float movementSpeed = 2f;
+    [Header("Vertical Movement")]
+    public bool enableVerticalMovement = false;
+    // public bool moveVertically;
+    public int verticalMoveDistance;
+    public float totalVerticalMovement = 50;
+    public bool isMovingDown = false;
+    [Header("Horizontal Movement")]
+    public bool enableHorizontalMovement = false;
+    // public bool moveHorizontally;
+    public int horizontalMoveDistance;
+    public float totalHorizontalMovement = 50;
+    public bool isMovingLeft = false;
 
     void Start()
     {
-        moveDistance = 0;
+        verticalMoveDistance = 0;
+        // moveVertically = false;
+        horizontalMoveDistance = 0;
+        // moveHorizontally = false;
     }
 
     void FixedUpdate()
     {
-        if(moveDistance <= totalMovement)
+        // Vertical Movement
+        if(enableVerticalMovement)
         {
-            if (isMovingDown)
+            if (verticalMoveDistance <= totalVerticalMovement)
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1) * moveSpeed;
+                if (isMovingDown)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1) * movementSpeed;
+                }
+                else
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, 1) * movementSpeed;
+                }
+                verticalMoveDistance++;
             }
             else
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 1) * moveSpeed;
+                isMovingDown = !isMovingDown;
+                verticalMoveDistance = 0;
             }
-            moveDistance++;
         }
-        else
+
+        // Horizontal Movement
+        if(enableHorizontalMovement)
         {
-            isMovingDown = !isMovingDown;
-            moveDistance = 0;
+            if (horizontalMoveDistance <= totalHorizontalMovement)
+            {
+                if (isMovingLeft)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(-1, 0) * movementSpeed;
+                }
+                else
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(1, 0) * movementSpeed;
+                }
+                horizontalMoveDistance++;
+            }
+            else
+            {
+                isMovingLeft = !isMovingLeft;
+                horizontalMoveDistance = 0;
+            }
         }
-
-
 
     }
 

@@ -185,7 +185,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Finish")
+        if (collision.tag == "Vinyl")
         {
             score += 100;
             Debug.Log("Vinyl");
@@ -197,6 +197,7 @@ public class Player : MonoBehaviour
         {
             score -= 10;
             lives -= 1;
+            collision.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
             Debug.Log("Secret Hit");
             AudioManager.Instance.soundEffectAudio.PlayOneShot(AudioManager.Instance.lostLifeSound);
         }
@@ -206,6 +207,14 @@ public class Player : MonoBehaviour
             score += 50;
             AudioManager.Instance.soundEffectAudio.PlayOneShot(AudioManager.Instance.lostLifeSound);
             collision.GetComponent<BoomBoxBug>().isDead = true;
+        }
+
+        if (collision.tag == "Finish")
+        {
+            score += 500;
+            Debug.Log("Level Complete!");
+            //AudioManager.Instance.soundEffectAudio.PlayOneShot(AudioManager.Instance.levelUpSound);
+            //Destroy(collision.gameObject);
         }
 
         scoreLine.text = "Score: " + score;
