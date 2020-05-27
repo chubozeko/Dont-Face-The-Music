@@ -14,9 +14,10 @@ public class BoomBoxBug : MonoBehaviour
     public bool enableMovement = true;
     public bool isDead = false;
     public int moveDistance;
-    public float totalMovement = 100;
-    public float moveSpeed = 5f;
+    public float totalMovement = 50;
+    public float speed = 3f;
     public bool isMovingRight = false;
+
     void Start()
     {
         moveDistance = 0;
@@ -43,16 +44,17 @@ public class BoomBoxBug : MonoBehaviour
                 {
                     if (!isMovingRight)
                     {
-                        GetComponent<Rigidbody2D>().velocity = new Vector2(-1, 0) * moveSpeed;
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(-1, 0) * speed;
                     }
                     else
                     {
-                        GetComponent<Rigidbody2D>().velocity = new Vector2(1, 0) * moveSpeed;
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(1, 0) * speed;
                     }
                     moveDistance++;
                 }
                 else
                 {
+                    transform.localScale = new Vector2(-1 * transform.localScale.x, transform.localScale.y);
                     isMovingRight = !isMovingRight;
                     moveDistance = 0;
                 }
@@ -70,5 +72,27 @@ public class BoomBoxBug : MonoBehaviour
         animator.SetBool("IsDead", isDead);
         yield return new WaitForSeconds(0.8f);
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Player")
+        {   
+            if(col.contacts[0].point.y > transform.position.y)
+            {
+                isDead = true;
+                GetComponent<Animator>().SetBool("IsDead", isDead);
+                GetComponent<Collider2D>().enabled = false;
+                col.gameObject.GetComponent<Player>().ChangeScore(50);
+                col.gameObject.GetComponent<Player>().ChangeLives(1);
+                Destroy(gameObject, 3);
+            }
+            else
+            {
+                // Play death sound
+                col.gameObject.GetComponent<Player>().ChangeScore(-50);
+                col.gameObject.GetComponent<Player>().ChangeLives(-1);
+            }
+        }
     }
 }

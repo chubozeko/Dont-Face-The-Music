@@ -50,6 +50,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -145,10 +146,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  facingRight: 1
-  jumpSpeed: 6
-  isJumping: 0
+  isFacingRight: 1
+  jumpSpeed: 5
   wallJumpY: 10
+  isJumping: 0
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
+  scoreLine: {fileID: 0}
+  livesRemaining: {fileID: 0}
 --- !u!95 &7768307740478720797
 Animator:
   serializedVersion: 3

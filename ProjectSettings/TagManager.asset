@@ -8,6 +8,8 @@ TagManager:
   - BoomBoxBug
   - MovingPlatform
   - Vinyl
+  - Platform
+  - Ground
   layers:
   - Default
   - TransparentFX
